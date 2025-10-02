@@ -11,7 +11,22 @@ namespace CajeroAutomático
     {
         static void Main(string[] args)
         {
-            // Menu Principal del Cajero
+            // Instancia de la clase Usuario
+            Usuario usuario = new Usuario("1234", "0001", 1000m);
+            usuario.GuardarDatos();
+            // Inicio de sesion del cajero
+            Console.Write("Ingrese su Numero de Cuenta: ");
+            string CuentaIngresada = Console.ReadLine();
+            Console.Write("Ingrese su Pin: ");
+            string PinIngresado = Console.ReadLine();
+            // Validacion de datos cargados desde el archivo
+            Usuario UsuarioIngresado = Usuario.ValidacionDeDatos(CuentaIngresada);
+            // Verificacion de datos para el ingreso
+            if(UsuarioIngresado != null && UsuarioIngresado.VerificacionCredenciales(CuentaIngresada, PinIngresado))
+            {
+                Console.WriteLine("Acceso permitido");
+            }
+
         } 
 
     }
