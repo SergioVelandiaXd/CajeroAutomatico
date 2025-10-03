@@ -76,6 +76,19 @@ namespace CajeroAutomático
             }
             return false;
         }
+        public bool CambiarPin(string PinActual, string NuevoPin)
+        {
+            if (this.pin == PinActual)
+            {
+                if (NuevoPin.Length >= 4 && NuevoPin.Length <= 8)
+                {
+                    this.Pin = NuevoPin;
+                    GuardarDatos(); // Guardar inmediatamente después del cambio
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }
 
