@@ -17,7 +17,7 @@ namespace CajeroAutomático
         private decimal Saldo;
 
         // Constructor
-        public Usuario(string Cuenta, string Pin, decimal Saldo)
+        public Usuario(string cuenta, string pin, decimal saldo)
         {
             this.Cuenta = cuenta;
             this.Pin = pin;
@@ -25,9 +25,9 @@ namespace CajeroAutomático
         }
         // Propiedades para acceder a los atributos privados de Usuario
         // Usando miembros con cuerpo de expresión
-        public string cuenta => cuenta;
-        public string pin => pin;
-        public decimal saldo => saldo;
+        public string cuenta => Cuenta;
+        public string pin => Pin;
+        public decimal saldo => Saldo;
 
 
         public void GuardarDatos() // Metodo para guardar datos
@@ -177,7 +177,6 @@ namespace CajeroAutomático
             }
             return false;
         }
-
     }
 }
 

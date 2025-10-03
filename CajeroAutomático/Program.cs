@@ -12,7 +12,7 @@ namespace CajeroAutomático
         static void Main(string[] args)
         {
             // Instancia de la clase Usuario
-            Usuario usuario = new Usuario("1234", "0001", 1000m);
+            Usuario usuario = new Usuario("1234", "0001", 0m);
             usuario.GuardarDatos();
             // Inicio de sesion del cajero
             Console.WriteLine("Cajero");
