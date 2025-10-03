@@ -16,7 +16,7 @@ namespace CajeroAutomático
         private decimal Saldo;
 
         // Constructor
-        public Usuario(string Cuenta,string Pin,decimal Saldo)
+        public Usuario(string Cuenta, string Pin, decimal Saldo)
         {
             this.Cuenta = cuenta;
             this.Pin = pin;
@@ -44,15 +44,15 @@ namespace CajeroAutomático
                 Escribir.WriteLine(saldo);
             }
         }
-        // validacion de datos
+        // Validacion de datos
         public static Usuario ValidacionDeDatos(string NumeroCuenta)
         {
             string Carpeta = "Usuario";
             string RutaArchivo = Path.Combine(Carpeta, NumeroCuenta + ".txt");
-            if(File.Exists(RutaArchivo))
+            if (File.Exists(RutaArchivo))
             {
                 string[] Lineas = File.ReadAllLines(RutaArchivo);
-                if(Lineas.Length >=3)
+                if (Lineas.Length >= 3)
                 {
                     return new Usuario(Lineas[0], Lineas[1], decimal.Parse(Lineas[2]));
                 }
@@ -63,6 +63,18 @@ namespace CajeroAutomático
         public bool VerificacionCredenciales(string CuentaIngresada, string PinIngresado)
         {
             return this.cuenta == CuentaIngresada && this.pin == PinIngresado;
+        }
+        // Depositar
+        public bool Deposito(decimal Cantidad)
+        {
+            if (Cantidad > 0)
+            {
+                decimal SaldoAnterior = this.Saldo;
+                this.Saldo += Cantidad;
+                GuardarDatos();
+                return true;
+            }
+            return false;
         }
     }
 }

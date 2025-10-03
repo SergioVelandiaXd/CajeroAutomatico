@@ -44,7 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
-    <Compile Include="Usuario.cs" />
+    <Compile Include="Cajero.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
