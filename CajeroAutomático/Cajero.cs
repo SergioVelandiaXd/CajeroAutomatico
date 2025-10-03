@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net.NetworkInformation;
@@ -65,7 +66,7 @@ namespace CajeroAutomático
             return this.cuenta == CuentaIngresada && this.pin == PinIngresado;
         }
         // Transaccion
-        class Transaccion
+         public class Transaccion
         {
             public DateTime Fecha { get; set; }
             public string Tipo { get; set; } // "Depósito" o "Retiro"
@@ -127,9 +128,43 @@ namespace CajeroAutomático
             }
             return false;
         }
+<<<<<<< HEAD
         public void ConsultarSaldo()
         {
             Console.WriteLine($"Su saldo actual es:  ${this.Saldo:N2}");
+=======
+        public List<Transaccion> UltimasMovimientos()
+        {
+            List<Transaccion> transacciones = new List<Transaccion>();
+            string Carpeta = "Historiales";
+            string RutaArchivo = Path.Combine(Carpeta, this.cuenta + "_historial.txt");
+
+            if (File.Exists(RutaArchivo))
+            {
+                string[] lineas = File.ReadAllLines(RutaArchivo);
+
+                // Tomar las últimas 5 líneas
+                var ultimasLineas = lineas.Reverse().Take(5).Reverse();
+
+                foreach (string linea in ultimasLineas)
+                {
+                    string[] partes = linea.Split('|');
+                    if (partes.Length == 5)
+                    {
+                        Transaccion transaccion = new Transaccion
+                        {
+                            Fecha = DateTime.ParseExact(partes[0], "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture),
+                            Tipo = partes[1],
+                            Cantidad = decimal.Parse(partes[2]),
+                            SaldoAnterior = decimal.Parse(partes[3]),
+                            SaldoNuevo = decimal.Parse(partes[4])
+                        };
+                        transacciones.Add(transaccion);
+                    }
+                }
+            }
+            return transacciones;
+>>>>>>> UltimosMovimientos
         }
     }
 }
