@@ -128,11 +128,10 @@ namespace CajeroAutomático
             }
             return false;
         }
-<<<<<<< HEAD
         public void ConsultarSaldo()
         {
             Console.WriteLine($"Su saldo actual es:  ${this.Saldo:N2}");
-=======
+        }
         public List<Transaccion> UltimasMovimientos()
         {
             List<Transaccion> transacciones = new List<Transaccion>();
@@ -164,8 +163,21 @@ namespace CajeroAutomático
                 }
             }
             return transacciones;
->>>>>>> UltimosMovimientos
         }
+        public bool CambiarPin(string PinActual, string NuevoPin)
+        {
+            if (this.pin == PinActual)
+            {
+                if (NuevoPin.Length >= 4 && NuevoPin.Length <= 8)
+                {
+                    this.Pin = NuevoPin;
+                    GuardarDatos(); // Guardar inmediatamente después del cambio
+                    return true;
+                }
+            }
+            return false;
+        }
+
     }
 }
 
