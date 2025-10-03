@@ -76,6 +76,10 @@ namespace CajeroAutomático
             }
             return false;
         }
+        public void ConsultarSaldo()
+        {
+            Console.WriteLine($"Su saldo actual es:  ${this.Saldo:N2}");
+        }
     }
 }
 
