@@ -64,6 +64,43 @@ namespace CajeroAutomático
         {
             return this.cuenta == CuentaIngresada && this.pin == PinIngresado;
         }
+        // Transaccion
+        class Transaccion
+        {
+            public DateTime Fecha { get; set; }
+            public string Tipo { get; set; } // "Depósito" o "Retiro"
+            public decimal Cantidad { get; set; }
+            public decimal SaldoAnterior { get; set; }
+            public decimal SaldoNuevo { get; set; }
+
+            public override string ToString()
+            {
+                return $"{Fecha:dd/MM/yyyy HH:mm} - {Tipo}: ${Cantidad:N2} (Saldo: ${SaldoNuevo:N2})";
+            }
+        }
+        // Historial Transaccion
+        private void GuardarTransaccion(string tipo, decimal cantidad, decimal saldoAnterior, decimal saldoNuevo)
+        {
+            string Carpeta = "Historiales";
+            if (!Directory.Exists(Carpeta))
+            {
+                Directory.CreateDirectory(Carpeta);
+            }
+
+            string rutaArchivo = Path.Combine(Carpeta, this.cuenta + "_historial.txt");
+            using (StreamWriter escritor = new StreamWriter(rutaArchivo, true)) // true para agregar al final
+            {
+                Transaccion transaccion = new Transaccion
+                {
+                    Fecha = DateTime.Now,
+                    Tipo = tipo,
+                    Cantidad = cantidad,
+                    SaldoAnterior = saldoAnterior,
+                    SaldoNuevo = saldoNuevo
+                };
+                escritor.WriteLine($"{transaccion.Fecha:yyyy-MM-dd HH:mm:ss}|{tipo}|{cantidad}|{saldoAnterior}|{saldoNuevo}");
+            }
+        }
         // Depositar
         public bool Deposito(decimal Cantidad)
         {
@@ -72,6 +109,20 @@ namespace CajeroAutomático
                 decimal SaldoAnterior = this.Saldo;
                 this.Saldo += Cantidad;
                 GuardarDatos();
+                GuardarTransaccion("Depósito", Cantidad, SaldoAnterior, this.saldo);
+                return true;
+            }
+            return false;
+        }
+        // Retiro
+        public bool Retiro(decimal Cantidad)
+        {
+            if(Cantidad > 00 && Cantidad <= this.saldo)
+            {
+                decimal SaldoAnterior = this.saldo;
+                this.Saldo -= Cantidad;
+                GuardarDatos();
+                GuardarTransaccion("Retiro", Cantidad, SaldoAnterior, this.Saldo);
                 return true;
             }
             return false;
